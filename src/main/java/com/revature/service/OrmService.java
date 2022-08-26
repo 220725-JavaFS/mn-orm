@@ -4,7 +4,7 @@ import com.revature.repository.*;
 import com.revature.models.*;
 
 public class OrmService {
-	@SuppressWarnings("unused")
+
 	private OrmDao dao;
 	
 	public OrmService() {
@@ -18,23 +18,39 @@ public class OrmService {
 	}
 	
 	public boolean tryConnect(DatabaseInfo info){
-		return true;
+		return dao.tryConnect(info);
 	}
 	
 	public Table getTableByName(String tableName) {
-		return null;
+		if(!dao.tableExists(tableName)) {
+			return null;
+		}else {
+			return dao.getTableByName(tableName);
+		}
 	}
 	
 	public boolean addToTable(String tableName, Row newRow) {
-		return true;
+		if(dao.tableExists(tableName) && dao.typesMatch(tableName, newRow)) {
+			return dao.addRow(tableName, newRow);
+		}else {
+			return false;
+		}
 	}
 	
 	public boolean removeMatchingRow(String tableName, Row toRemove) {
-		return true;
+		if(dao.tableExists(tableName) && dao.typesMatch(tableName,toRemove) && dao.containsRow(tableName, toRemove)) {
+			return dao.removeRow(tableName, toRemove);
+		}else {
+			return false;
+		}
 	}
 	
 	public boolean updateRow(String tableName, Row rowToReplace, Row newRow) {
-		return true;
+		if(dao.tableExists(tableName) && dao.typesMatch(tableName, rowToReplace) && dao.typesMatch(tableName, newRow) && dao.containsRow(tableName, rowToReplace)) {
+			return dao.updateRow(tableName, rowToReplace, newRow);
+		}else {
+			return false;
+		}
 	}
 
 }
