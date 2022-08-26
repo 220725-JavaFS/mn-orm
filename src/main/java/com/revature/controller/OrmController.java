@@ -1,5 +1,8 @@
 package com.revature.controller;
 
+import java.util.Hashtable;
+import java.util.LinkedHashSet;
+
 import com.revature.models.*;
 import com.revature.service.*;
 
@@ -25,15 +28,15 @@ public class OrmController{
 		return service.getTableByName(tableName);
 	}
 	
-	public boolean addToTable(String tableName, Row newRow) {
+	public boolean addToTable(String tableName, LinkedHashSet<Hashtable<String, Object>> newRow) {
 		return service.addToTable(tableName, newRow);
 	}
 	
-	public boolean removeMatchingRow(String tableName, Row toRemove) {
+	public boolean removeMatchingRow(String tableName, LinkedHashSet<Hashtable<String, Object>> toRemove) {
 		return service.removeMatchingRow(tableName, toRemove);
 	}
 	
-	public boolean updateRow(String tableName, Row rowToReplace, Row newRow) {
+	public boolean updateRow(String tableName, LinkedHashSet<Hashtable<String, Object>> rowToReplace, LinkedHashSet<Hashtable<String, Object>> newRow) {
 		return service.updateRow(tableName, rowToReplace, newRow);
 	}
 	
