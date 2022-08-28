@@ -3,8 +3,6 @@ package com.revature.service;
 import com.revature.repository.*;
 
 import java.util.Hashtable;
-import java.util.LinkedHashSet;
-
 import com.revature.models.*;
 
 public class OrmService {
@@ -33,7 +31,7 @@ public class OrmService {
 		}
 	}
 	
-	public boolean addToTable(String tableName, LinkedHashSet<Hashtable<String, Object>> newRow) {
+	public boolean addToTable(String tableName, Hashtable<String, VariableObject> newRow) {
 		if(dao.tableExists(tableName) && dao.typesMatch(tableName, newRow)) {
 			return dao.addRow(tableName, newRow);
 		}else {
@@ -41,7 +39,7 @@ public class OrmService {
 		}
 	}
 	
-	public boolean removeMatchingRow(String tableName, LinkedHashSet<Hashtable<String, Object>> toRemove) {
+	public boolean removeMatchingRow(String tableName, Hashtable<String, VariableObject> toRemove) {
 		if(dao.tableExists(tableName) && dao.typesMatch(tableName,toRemove) && dao.containsRow(tableName, toRemove)) {
 			return dao.removeRow(tableName, toRemove);
 		}else {
@@ -49,7 +47,7 @@ public class OrmService {
 		}
 	}
 	
-	public boolean updateRow(String tableName, LinkedHashSet<Hashtable<String, Object>> rowToReplace, LinkedHashSet<Hashtable<String, Object>> newRow) {
+	public boolean updateRow(String tableName, Hashtable<String, VariableObject> rowToReplace, Hashtable<String, VariableObject> newRow) {
 		if(dao.tableExists(tableName) && dao.typesMatch(tableName, rowToReplace) && dao.typesMatch(tableName, newRow) && dao.containsRow(tableName, rowToReplace)) {
 			return dao.updateRow(tableName, rowToReplace, newRow);
 		}else {

@@ -6,22 +6,48 @@ import java.util.LinkedHashSet;
 
 public class Table {
 	
-	public Table(LinkedHashSet<String> rowTitles, LinkedHashSet<Hashtable<String, Object>> rows) {
+	public Table() {
 		super();
-		this.rowTitles = rowTitles;
+		columnTitles = new LinkedHashSet<String>();
+		rows = new LinkedHashSet<Hashtable<String,VariableObject>>();
+	}
+	
+	public Table(LinkedHashSet<String> rowTitles, LinkedHashSet<Hashtable<String,VariableObject>> rows) {
+		super();
+		this.columnTitles = rowTitles;
 		this.rows = rows;
 	}
 	
-	public LinkedHashSet<String> rowTitles;
-	public LinkedHashSet<Hashtable<String,Object>> rows;
+	public LinkedHashSet<String> columnTitles;
+	public LinkedHashSet<Hashtable<String, VariableObject>> rows;
 	
-	public void addRow(Hashtable<String, Object> newRow) {
-		if(!newRow.keySet().equals(rowTitles)) {
+	public void addRow(Hashtable<String,VariableObject> newRow) {
+		if(!newRow.keySet().equals(columnTitles)) {
 			return;
 		}
 		
 		rows.add(newRow);
 		return;
+	}
+	
+	public boolean containsRow(Hashtable<String,VariableObject> toFind) {
+		for(Hashtable<String,VariableObject> toCheck : rows) {
+			if(rowCompare(toCheck,toFind)) {
+				return true;
+			}else {
+				continue;
+			}
+		}
+		return false;
+	}
+	
+	public static boolean rowCompare(Hashtable<String,VariableObject> a, Hashtable<String,VariableObject> b) {
+		for(String key : a.keySet()) {
+			if(!b.containsKey(key) || (a.get(key) != b.get(key))) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 
