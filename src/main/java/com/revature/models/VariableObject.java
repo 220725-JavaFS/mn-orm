@@ -2,6 +2,16 @@ package com.revature.models;
 
 public class VariableObject {
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj instanceof VariableObject) {
+			if(((VariableObject) obj).currentType == currentType) {
+				return ((VariableObject)obj).toString().equals(this.toString());
+			}
+		}
+		return false;
+	}
+
 	private Class<?> currentType = null;
 	private Integer intValue = null;
 	private String stringValue = null;
@@ -61,6 +71,16 @@ public class VariableObject {
 			return intValue.toString();
 		}else if(stringValue != null) {
 			return "\"" + stringValue + "\"";
+		}else {
+			return "";
+		}
+	}
+	
+	public String toString() {
+		if(intValue != null) {
+			return intValue.toString();
+		}else if(stringValue != null) {
+			return stringValue;
 		}else {
 			return "";
 		}

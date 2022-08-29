@@ -74,7 +74,7 @@ public class OrmDaoImp implements OrmDao {
 			DatabaseMetaData meta = conn.getMetaData();
 			ResultSet searchResult = meta.getTables(null, null, tableName.toLowerCase(), null);
 			while(searchResult.next()) {
-				if(searchResult.getString("TABLE_NAME").toLowerCase() == tableName.toLowerCase()) {
+				if(searchResult.getString("TABLE_NAME").equalsIgnoreCase(tableName)) {
 					return true;
 				}
 			}
@@ -99,7 +99,7 @@ public class OrmDaoImp implements OrmDao {
 			}
 			
 			for(int i = 1; i <= meta.getColumnCount(); i++) {
-				if(testRow.get(meta.getColumnName(i)) != null && Class.forName(meta.getColumnClassName(i)) != testRow.get(meta.getColumnName(i)).getClass()) {
+				if(testRow.get(meta.getColumnName(i)) != null && Class.forName(meta.getColumnClassName(i)) != testRow.get(meta.getColumnName(i)).getCurrentClass()) {
 					return false;
 				}
 			}
@@ -133,7 +133,7 @@ public class OrmDaoImp implements OrmDao {
 			
 			Statement statement = conn.createStatement();
 			String sql = sqlFront.toString() + sqlBack.toString();
-			statement.executeQuery(sql);
+			statement.execute(sql);
 			return true;
 		}catch(SQLException e){
 			e.printStackTrace();
@@ -154,7 +154,6 @@ public class OrmDaoImp implements OrmDao {
 			e.printStackTrace();
 			return false;
 		}
-		
 		return toSearch.containsRow(toFind);
 		
 	}
@@ -164,19 +163,19 @@ public class OrmDaoImp implements OrmDao {
 		try {
 			Connection conn = ConnectionUtil.getConnection(loginInfo);
 			StringBuilder sqlBuild = new StringBuilder();
-			sqlBuild.append("DELETE FROM " + tableName + "WHERE ");
+			sqlBuild.append("DELETE FROM " + tableName + " WHERE ");
 			
 			for(String key : toRemove.keySet()) {
 				sqlBuild.append(key + " = " + toRemove.get(key).toSqlString() + " AND ");
 			}
 			
-			sqlBuild.delete(sqlBuild.length()-6, sqlBuild.length()-1);
+			sqlBuild.delete(sqlBuild.length()-5, sqlBuild.length());
 			sqlBuild.append(";");
 
 			
 			Statement statement = conn.createStatement();
 			String sql = sqlBuild.toString();
-			statement.executeQuery(sql);
+			statement.execute(sql);
 			return true;
 		}catch(SQLException e){
 			e.printStackTrace();
