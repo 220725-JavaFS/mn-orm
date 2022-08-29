@@ -29,11 +29,7 @@ public class ConnectionUtil {
 				String username = info.username;
 				String password = info.password;
 				
-				try {
-					connection = DriverManager.getConnection(url, username, password);
-				} catch (SQLException e) {
-					return null;
-				}
+				connection = DriverManager.getConnection(url, username, password);
 				
 				return connection;
 				

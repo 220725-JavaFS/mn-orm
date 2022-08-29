@@ -50,5 +50,23 @@ public class Table {
 		return true;
 	}
 	
+	public String toJson() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{");
+		for(Hashtable<String,VariableObject> row : rows) {
+			builder.append("{");
+			for(String key : row.keySet()) {
+				builder.append("\"" + key + "\" : " + row.get(key).toJsonString() + ",");
+			}
+			builder.delete(builder.length()-1,builder.length());
+			builder.append("},");
+		}
+		if(builder.length() >= 2) {
+			builder.delete(builder.length()-1,builder.length());
+		}
+		builder.append("}");
+		return builder.toString();
+	}
+	
 
 }

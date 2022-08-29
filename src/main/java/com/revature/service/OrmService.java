@@ -25,7 +25,7 @@ public class OrmService {
 	
 	public Table getTableByName(String tableName) {
 		if(!dao.tableExists(tableName)) {
-			return null;
+			return dao.getTableByName(tableName);
 		}else {
 			return dao.getTableByName(tableName);
 		}

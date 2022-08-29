@@ -72,9 +72,9 @@ public class OrmDaoImp implements OrmDao {
 		Connection conn = ConnectionUtil.getConnection(loginInfo);
 		try {
 			DatabaseMetaData meta = conn.getMetaData();
-			ResultSet searchResult = meta.getTables(null, null, null, null);
+			ResultSet searchResult = meta.getTables(null, null, tableName.toLowerCase(), null);
 			while(searchResult.next()) {
-				if(searchResult.getString("TABLE_NAME") == tableName.toUpperCase()) {
+				if(searchResult.getString("TABLE_NAME").toLowerCase() == tableName.toLowerCase()) {
 					return true;
 				}
 			}

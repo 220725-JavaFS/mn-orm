@@ -56,6 +56,16 @@ public class VariableObject {
 		currentType = newValue.getClass();
 	}
 	
+	public String toJsonString() {
+		if(intValue != null) {
+			return intValue.toString();
+		}else if(stringValue != null) {
+			return "\"" + stringValue + "\"";
+		}else {
+			return "";
+		}
+	}
+	
 	
 
 }

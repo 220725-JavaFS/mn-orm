@@ -39,7 +39,7 @@ class OrmControllerTest {
 	void testAddToTable() {
 		assertTrue(cont.addToTable("valid", goodHash) == true);
 		assertTrue(cont.addToTable("invalid", goodHash) == false);
-		assertTrue(cont.addToTable("valid", null)== false);
+		assertTrue(cont.addToTable("valid", null) == false);
 	}
 	
 	@Test
